@@ -3,7 +3,7 @@ import { Check, Phone } from "lucide-react";
 import { PageHero } from "../components/PageHero";
 
 export const Route = createFileRoute("/admissions")({
-  component: Admissions;
+  component: Admissions,
 });
 
 const steps = [
