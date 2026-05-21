@@ -48,7 +48,7 @@ export function Navbar() {
 
         <button
           aria-label="Toggle menu"
-          className="lg:hidden p-2 rounded-md hover:bg-muted"
+          className="lg:hidden p-2 rounded-full bg-white text-brand-blue shadow-sm border border-border hover:bg-white"
           onClick={() => setOpen(true)}
         >
           <Menu className="w-6 h-6" />
@@ -65,7 +65,7 @@ export function Navbar() {
           onClick={() => setOpen(false)}
         />
         <aside
-          className={`absolute right-0 top-0 h-full w-72 bg-white shadow-xl p-6 flex flex-col gap-4 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute right-0 top-0 h-full w-72 bg-white shadow-xl border-l border-border p-6 flex flex-col gap-4 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="flex items-center justify-between mb-4">
             <LogoBadge size="lg" />

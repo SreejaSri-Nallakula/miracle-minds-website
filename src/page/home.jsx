@@ -1,7 +1,21 @@
 import { Link } from "react-router-dom";
 import { GraduationCap, ShieldCheck, Users, Palette, ArrowRight, Star, BookOpen, Award, ChevronLeft, ChevronRight, Images, ClipboardList, CheckCircle, FileText, UserCheck, CalendarCheck } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
-import BounceCards from "../components/BounceCards";
+import CircularGallery from "../components/CircularGallery";
+
+const heroGalleryItems = Object.entries(
+  import.meta.glob("../assets/gallery/*.{png,jpg,jpeg,webp,svg}", {
+    eager: true,
+    import: "default",
+  })
+)
+  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+  .slice(0, 8)
+  .map(([path, image], index) => ({
+    image,
+    text: `Gallery ${index + 1}`,
+    path,
+  }));
 
 /* ── Data ───────────────────────────────────────────────── */
 const highlights = [
@@ -115,7 +129,7 @@ function AdmissionsCard() {
   const Icon = current.icon;
 
   return (
-    <div className="parallax-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "560px", alignItems: "stretch" }}>
+    <div className="parallax-row admissions-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "560px", alignItems: "stretch" }}>
       {/* LEFT: text slides in */}
       <div
         ref={textRef}
@@ -303,7 +317,8 @@ export function HomePage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
         *, *::before, *::after { box-sizing: border-box; }
-        .mm-page { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        html, body { overflow-x: hidden; }
+        .mm-page { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: clip; }
 
         @media (max-width: 768px) {
           .parallax-row {
@@ -311,6 +326,13 @@ export function HomePage() {
           }
           .parallax-row > div:first-child {
             min-height: 320px !important;
+          }
+          .admissions-row {
+            display: flex !important;
+            flex-direction: column-reverse !important;
+          }
+          .admissions-row > div {
+            width: 100% !important;
           }
         }
 
@@ -356,24 +378,86 @@ export function HomePage() {
         }
         .hero-actions {
           display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-          margin-top: 24px;
+          gap: 8px;
+          flex-wrap: nowrap;
+          margin-top: 16px;
         }
         .hero-visual {
           justify-self: end;
           width: 100%;
-          max-width: 620px;
+          max-width: min(760px, calc(100vw - 72px));
+          transform: translateY(-34px);
+        }
+        .hero-gallery-shell {
+          width: 100%;
+          height: 500px;
+          margin: 0 auto;
         }
         @media (max-width: 960px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+          .hero-copy {
+            text-align: center !important;
+            justify-self: center !important;
           }
           .hero-copy {
             max-width: 100% !important;
           }
+          .hero-copy h1,
+          .hero-copy p {
+            text-align: center !important;
+          }
           .hero-visual {
-            justify-self: start !important;
+            justify-self: center !important;
+            max-width: min(100%, calc(100vw - 32px)) !important;
+            width: 100% !important;
+            margin-top: 12px;
+            transform: translateY(-10px);
+          }
+          .hero-gallery-shell {
+            height: 380px !important;
+          }
+          .hero-actions {
+            flex-wrap: wrap !important;
+            gap: 10px !important;
+            justify-content: center !important;
+          }
+          .hero-actions a {
+            font-size: 0.76rem !important;
+            padding: 9px 12px !important;
+            white-space: nowrap !important;
+          }
+          .hero-shell > div {
+            padding: 52px 20px 48px !important;
+            max-width: 100% !important;
+          }
+          .hero-copy h1 { font-size: clamp(1.6rem, 6vw, 2.6rem) !important; }
+        }
+        @media (max-width: 640px) {
+          .hero-copy h1 {
+            font-size: clamp(1.5rem, 9vw, 2.1rem) !important;
+            line-height: 1.02 !important;
+          }
+          .hero-copy p {
+            font-size: 0.92rem !important;
+            line-height: 1.65 !important;
+          }
+          .hero-kicker {
+            font-size: 9px !important;
+            padding: 5px 10px !important;
+          }
+          .hero-actions {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .hero-actions a {
+            justify-content: center !important;
+            width: 100% !important;
+          }
+          .hero-gallery-shell {
+            height: 320px !important;
           }
         }
       `}</style>
@@ -401,7 +485,7 @@ export function HomePage() {
           >
             <div className="hero-grid">
               <div className="hero-copy">
-                <span className="hero-kicker" style={{ display: "inline-flex", alignItems: "center", gap: "8px", borderRadius: "999px", padding: "7px 16px", fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", marginBottom: "18px", textTransform: "uppercase" }}>
+                <span className="hero-kicker" style={{ display: "inline-flex", alignItems: "center", gap: "8px", borderRadius: "999px", padding: "6px 12px", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", marginBottom: "14px", textTransform: "uppercase" }}>
                   <span style={{ width: "7px", height: "7px", borderRadius: "999px", background: "#FFD54A" }} />
                   Admissions Open — 2026–27
                 </span>
@@ -415,17 +499,26 @@ export function HomePage() {
                 </p>
 
                 <div className="hero-actions">
-                  <Link to="/admissions" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#E8272A", color: "#fff", fontWeight: 800, padding: "14px 24px", borderRadius: "999px", textDecoration: "none", fontSize: "0.95rem", boxShadow: "0 10px 24px rgba(232,39,42,0.34)", transition: "transform 0.2s" }}>
+                  <Link to="/admissions" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "#E8272A", color: "#fff", fontWeight: 800, padding: "11px 16px", borderRadius: "999px", textDecoration: "none", fontSize: "0.82rem", boxShadow: "0 10px 24px rgba(232,39,42,0.34)", transition: "transform 0.2s", whiteSpace: "nowrap" }}>
                     Explore Admissions <ArrowRight size={16} />
                   </Link>
-                  <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.10)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", color: "#fff", fontWeight: 800, padding: "14px 24px", borderRadius: "999px", textDecoration: "none", fontSize: "0.95rem" }}>
+                  <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "rgba(255,255,255,0.10)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", color: "#fff", fontWeight: 800, padding: "11px 16px", borderRadius: "999px", textDecoration: "none", fontSize: "0.82rem", whiteSpace: "nowrap" }}>
                     Contact Us
                   </Link>
                 </div>
               </div>
 
               <div className="hero-visual">
-                <BounceCards containerWidth={600} containerHeight={420} animationDelay={0.12} animationStagger={0.08} />
+                <div className="hero-gallery-shell">
+                  <CircularGallery
+                    items={heroGalleryItems}
+                    bend={1}
+                    textColor="#ffffff"
+                    borderRadius={0.04}
+                    scrollSpeed={1}
+                    scrollEase={0.02}
+                  />
+                </div>
               </div>
             </div>
           </div>
