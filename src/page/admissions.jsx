@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Phone } from "lucide-react";
 
 const steps = [
@@ -49,7 +50,7 @@ export function AdmissionsPage() {
             A simple, transparent admissions process designed with families in mind.
           </p>
           <div className="mt-6 sm:mt-8 flex items-center gap-3">
-            <div className="bg-[#c55a3f] rounded-full w-10 h-[3px] sm:w-12 sm:h-1" />
+            <div className="bg-[#c55a3f] rounded-full w-10 h-0.75 sm:w-12 sm:h-1" />
             <a
               href="tel:+91 9849140520"
               className="inline-flex items-center gap-2 rounded-full font-medium
@@ -91,7 +92,7 @@ export function AdmissionsPage() {
           {steps.map((s) => (
             <div key={s.n} className="relative flex items-start gap-4 pb-8 last:pb-0">
               {/* badge sits on the dashed line */}
-              <div className="absolute -left-[21px] w-8 h-8 rounded-full
+              <div className="absolute -left-5.25 w-8 h-8 rounded-full
                                bg-[#0f2557] text-white border-2 border-white
                                ring-2 ring-[#0f2557]
                                flex items-center justify-center
@@ -113,10 +114,10 @@ export function AdmissionsPage() {
         {/* ── TABLET / DESKTOP horizontal stepper ── */}
         <div className="hidden sm:flex items-start">
           {steps.map((s, i) => (
-            <>
+            <Fragment key={s.n}>
               {/* Step */}
-              <div key={s.n} className="relative flex flex-col items-center text-center
-                                         w-[120px] md:w-[160px] lg:w-[180px] shrink-0">
+              <div className="relative flex flex-col items-center text-center
+                                         w-30 md:w-40 lg:w-45 shrink-0">
                 {/* Ghost big number behind badge */}
                 <span className="absolute -top-5 left-1/2 -translate-x-1/2
                                   font-serif font-black text-[#f0f2f8] leading-none select-none
@@ -145,13 +146,13 @@ export function AdmissionsPage() {
 
               {/* Dashed connector (not after last step) */}
               {i < steps.length - 1 && (
-                <div key={`line-${i}`}
-                  className="flex-1 mt-5 md:mt-6 lg:mt-7 h-[2px]"
+                <div
+                  className="flex-1 mt-5 md:mt-6 lg:mt-7 h-0.5"
                   style={{
                     background: "repeating-linear-gradient(90deg,#c55a3f 0,#c55a3f 6px,transparent 6px,transparent 14px)"
                   }} />
               )}
-            </>
+            </Fragment>
           ))}
         </div>
       </section>
@@ -170,9 +171,9 @@ export function AdmissionsPage() {
 
           {/* Left dark panel */}
           <div className="bg-[#0f2557] text-white flex flex-col justify-center
-                           px-4 py-5 w-[90px] shrink-0
-                           sm:px-5 sm:py-6 sm:w-[120px]
-                           md:px-6 md:w-[148px]">
+                           px-4 py-5 w-22.5 shrink-0
+                           sm:px-5 sm:py-6 sm:w-30
+                           md:px-6 md:w-37">
             <Phone className="text-[#c55a3f] mb-3 w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8" />
             <p className="font-serif font-semibold text-white leading-snug
                            text-[12px] sm:text-[14px] md:text-[15px]">
@@ -219,7 +220,7 @@ export function AdmissionsPage() {
             <div className="rounded-lg bg-red-50 flex items-center justify-center mb-4
                              w-9 h-9 sm:w-10 sm:h-10">
               {/* graduation cap icon */}
-              <svg className="text-[#c55a3f] w-[18px] h-[18px] sm:w-5 sm:h-5"
+                  <svg className="text-[#c55a3f] w-4.5 h-4.5 sm:w-5 sm:h-5"
                    fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round"
                   d="M12 3L2 8l10 5 10-5-10-5zM2 8v6M22 8v6M6 10.5v5a6 6 0 0012 0v-5" />
@@ -255,7 +256,7 @@ export function AdmissionsPage() {
           <div className="absolute -right-12 -top-12 w-40 h-40 rounded-full
                            bg-[#c55a3f]/15 pointer-events-none" />
           <div className="absolute -left-10 -bottom-10 w-32 h-32 rounded-full
-                           bg-white/[0.03] pointer-events-none" />
+                           bg-white/3 pointer-events-none" />
           {/* Diagonal grid */}
           <div className="absolute inset-0 pointer-events-none opacity-5"
                style={{ backgroundImage: "repeating-linear-gradient(45deg,white 0,white 1px,transparent 1px,transparent 12px)" }} />

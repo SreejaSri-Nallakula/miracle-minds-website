@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { LogoBadge } from "./LogoBadge";
 
@@ -14,6 +14,14 @@ const links = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -48,29 +56,41 @@ export function Navbar() {
 
         <button
           aria-label="Toggle menu"
-          className="lg:hidden p-2 rounded-full bg-white text-brand-blue shadow-sm border border-border hover:bg-white"
+          type="button"
+          className="lg:hidden p-2 rounded-full shadow-sm border border-border"
+          style={{
+            background: "#ffffff",
+            backgroundColor: "#ffffff",
+            backgroundImage: "none",
+            color: "#1A5BA8",
+            opacity: 1,
+            WebkitAppearance: "none",
+            appearance: "none",
+            boxShadow: "0 6px 16px rgba(26, 91, 168, 0.14)",
+          }}
           onClick={() => setOpen(true)}
         >
-          <Menu className="w-6 h-6" />
+          <Menu className="w-6 h-6" style={{ color: "#1A5BA8" }} />
         </button>
       </div>
 
       {/* Mobile drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition ${open ? "visible" : "invisible"}`}
+        className={`fixed inset-0 z-9999 lg:hidden transition ${open ? "visible" : "invisible"}`}
         aria-hidden={!open}
       >
         <div
-          className={`absolute inset-0 bg-black/40 transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
+          className={`fixed inset-0 bg-black/45 transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
           onClick={() => setOpen(false)}
         />
         <aside
-          className={`absolute right-0 top-0 h-full w-72 bg-white shadow-xl border-l border-border p-6 flex flex-col gap-4 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed right-0 top-0 h-dvh w-[min(88vw,20rem)] overflow-y-auto bg-white shadow-2xl border-l border-border p-6 flex flex-col gap-4 transition-transform duration-300 ease-out ${open ? "translate-x-0" : "translate-x-full"}`}
+          style={{ background: "#ffffff", backgroundColor: "#ffffff", backgroundImage: "none", opacity: 1 }}
         >
           <div className="flex items-center justify-between mb-4">
             <LogoBadge size="lg" />
-            <button onClick={() => setOpen(false)} aria-label="Close" className="p-2 rounded hover:bg-muted">
-              <X className="w-5 h-5" />
+            <button onClick={() => setOpen(false)} aria-label="Close" className="p-2 rounded-full border border-border bg-white shadow-sm" style={{ background: "#ffffff", backgroundColor: "#ffffff", backgroundImage: "none", opacity: 1 }}>
+              <X className="w-5 h-5 text-brand-blue" />
             </button>
           </div>
           {links.map((l) => (

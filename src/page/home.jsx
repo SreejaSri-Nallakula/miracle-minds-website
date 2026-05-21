@@ -95,14 +95,41 @@ function useParallax(speed = 0.12) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const onScroll = () => {
+    let rafId = 0;
+    const metrics = { top: 0, height: 0 };
+
+    const measure = () => {
       const rect = el.getBoundingClientRect();
-      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
-      el.style.transform = `translateY(${center * speed}px)`;
+      metrics.top = rect.top + window.scrollY;
+      metrics.height = rect.height;
+    };
+
+    const update = () => {
+      if (!metrics.height) measure();
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+      const elementCenter = metrics.top + metrics.height / 2;
+      const offset = viewportCenter - elementCenter;
+      const isMobile = window.innerWidth < 768;
+      const adjustedSpeed = isMobile ? speed * 0.24 : speed;
+      el.style.willChange = "transform";
+      el.style.transform = `translate3d(0, ${offset * adjustedSpeed}px, 0)`;
+      rafId = 0;
+    };
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(update);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("orientationchange", onScroll, { passive: true });
+    measure();
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("orientationchange", onScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
   }, [speed]);
   return ref;
 }
@@ -318,7 +345,7 @@ export function HomePage() {
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
         *, *::before, *::after { box-sizing: border-box; }
         html, body { overflow-x: hidden; }
-        .mm-page { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: clip; }
+        .mm-page { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: clip; touch-action: pan-y; }
 
         @media (max-width: 768px) {
           .parallax-row {
