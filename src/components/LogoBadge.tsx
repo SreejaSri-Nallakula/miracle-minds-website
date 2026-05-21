@@ -1,13 +1,32 @@
-export function LogoBadge({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const sizes = {
-    sm: "text-xs px-2 py-1",
-    md: "text-sm px-3 py-1.5",
-    lg: "text-2xl px-5 py-2.5",
+export function LogoBadge({ size = "md" }: { size?: "sm" | "md" | "lg" | "xl" }) {
+  const heights: Record<string, string> = {
+    sm: "h-6",
+    md: "h-8",
+    lg: "h-12",
+    xl: "h-20",
   };
+
+  const faviconHeights: Record<string, string> = {
+    sm: "h-4",
+    md: "h-6",
+    lg: "h-8",
+    xl: "h-10",
+  };
+
   return (
-    <div className="inline-flex font-display font-extrabold tracking-wide select-none rounded-md overflow-hidden shadow-card">
-      <span className={`${sizes[size]} bg-brand-red text-white`}>MIRACLE</span>
-      <span className={`${sizes[size]} bg-brand-blue text-white`}>MINDS</span>
+    <div className={`inline-flex items-center gap-3 select-none`}>
+      <img
+        src="/Favicon.png?v=2"
+        alt="Miracle Minds logo"
+        className={`${faviconHeights[size]} object-contain`} 
+        loading="eager"
+      />
+      <img
+        src="/SchlName.png?v=2"
+        alt="Miracle Minds wordmark"
+        className={`${heights[size]} object-contain`} 
+        loading="lazy"
+      />
     </div>
   );
 }

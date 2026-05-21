@@ -18,7 +18,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <LogoBadge size="md" />
+          <LogoBadge size="xl" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
@@ -68,7 +68,7 @@ export function Navbar() {
           className={`absolute right-0 top-0 h-full w-72 bg-white shadow-xl p-6 flex flex-col gap-4 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="flex items-center justify-between mb-4">
-            <LogoBadge size="sm" />
+            <LogoBadge size="lg" />
             <button onClick={() => setOpen(false)} aria-label="Close" className="p-2 rounded hover:bg-muted">
               <X className="w-5 h-5" />
             </button>
