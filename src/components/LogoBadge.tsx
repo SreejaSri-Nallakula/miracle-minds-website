@@ -1,9 +1,10 @@
-export function LogoBadge({ size = "md" }: { size?: "sm" | "md" | "lg" | "xl" }) {
+export function LogoBadge({ size = "md" }: { size?: "sm" | "md" | "lg" | "xl" | "2xl" }) {
   const heights: Record<string, string> = {
     sm: "h-6",
     md: "h-8",
     lg: "h-12",
     xl: "h-20",
+    "2xl": "h-32",
   };
 
   const faviconHeights: Record<string, string> = {
@@ -11,6 +12,7 @@ export function LogoBadge({ size = "md" }: { size?: "sm" | "md" | "lg" | "xl" })
     md: "h-6",
     lg: "h-8",
     xl: "h-10",
+    "2xl": "h-14",
   };
 
   return (

@@ -1,81 +1,191 @@
-import { Target, Star, BookOpen, Heart, Lightbulb, Trophy } from "lucide-react";
-import { PageHero } from "../components/PageHero";
-import { SectionHeading } from "../components/SectionHeading";
+import { Target, Star, BookOpen, Heart, Lightbulb, ShieldCheck } from "lucide-react";
 
 const values = [
-  { icon: BookOpen, title: "Excellence", desc: "Pursuing the highest standards in everything we do." },
-  { icon: Heart, title: "Compassion", desc: "Caring for one another with kindness and empathy." },
-  { icon: Lightbulb, title: "Curiosity", desc: "Encouraging questions and the joy of discovery." },
-  { icon: Trophy, title: "Integrity", desc: "Building character through honesty and responsibility." },
+  { icon: BookOpen,    title: "Excellence", desc: "Pursuing the highest standards in everything we do, academically and beyond." },
+  { icon: Heart,       title: "Compassion", desc: "Caring for one another with genuine kindness and empathy every day." },
+  { icon: Lightbulb,   title: "Curiosity",  desc: "Encouraging meaningful questions and the enduring joy of discovery." },
+  { icon: ShieldCheck, title: "Integrity",  desc: "Building lasting character through honesty, responsibility, and trust." },
 ];
 
 export function AboutPage() {
   return (
-    <>
-      <PageHero title="About Miracle Minds" subtitle="A nurturing space where children grow into confident, curious, and compassionate learners." />
+    <div className="min-h-screen bg-[#f4f5f8]">
 
-      <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-lg text-ink/80 leading-relaxed">
-          Miracle Minds is a leading primary school dedicated to providing quality education that nurtures both the mind and the heart. Our experienced teachers, modern facilities, and child-centered approach create an environment where every student can flourish.
-        </p>
-        <p className="mt-5 text-lg text-ink/80 leading-relaxed">
-          We blend academic rigor with creative learning, sports, and personal development — ensuring that every child leaves Miracle Minds prepared for the world and inspired to make a difference in it.
-        </p>
-      </section>
-
-      <section className="py-12 bg-bg-light">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-6">
-          <div className="rounded-2xl bg-brand-blue text-white p-8 shadow-card">
-            <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-4">
-              <Star className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-bold mb-3">Our Vision</h3>
-            <p className="text-white/90 leading-relaxed">
-              To be the school of choice for families who seek an inspiring, values-driven education that prepares children to lead with confidence, curiosity, and compassion.
-            </p>
-          </div>
-          <div className="rounded-2xl bg-brand-red text-white p-8 shadow-card">
-            <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-4">
-              <Target className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-bold mb-3">Our Mission</h3>
-            <p className="text-white/90 leading-relaxed">
-              To deliver a holistic, student-first education that builds strong fundamentals, nurtures creativity, and develops the character and resilience children need to thrive.
-            </p>
-          </div>
+      {/* ── Hero ── */}
+      <section className="relative bg-[#0f2557] text-white overflow-hidden
+                          px-5 pt-10 pb-9
+                          sm:px-10 sm:pt-14 sm:pb-12
+                          md:px-14 md:pt-18 md:pb-16
+                          lg:px-20 lg:pt-20 lg:pb-20">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-5"
+          style={{ backgroundImage: "repeating-linear-gradient(45deg,white 0,white 1px,transparent 1px,transparent 12px)" }}
+        />
+        <div className="relative max-w-5xl mx-auto">
+          <p className="flex items-center gap-2 uppercase font-medium text-blue-200 mb-4
+                         text-[10px] tracking-[2.5px]
+                         sm:text-[11px] sm:tracking-[3px] sm:mb-5">
+            <span className="block h-[1.5px] bg-[#c55a3f] shrink-0 w-6 sm:w-8" />
+            Miracle Minds Primary School
+          </p>
+          <h1 className="font-serif font-bold leading-snug mb-3
+                          text-[28px]
+                          sm:text-4xl sm:leading-tight sm:mb-4
+                          md:text-5xl md:mb-5">
+            About Our School
+          </h1>
+          <p className="text-blue-100 font-light
+                         text-[13px] leading-[1.75]
+                         sm:text-[15px] sm:leading-relaxed sm:max-w-lg
+                         md:text-base md:max-w-xl">
+            A nurturing space where children grow into confident, curious, and
+            compassionate learners — prepared for the world ahead.
+          </p>
+          <div className="bg-[#c55a3f] rounded-full mt-6 sm:mt-8
+                           w-10 h-[3px] sm:w-12 sm:h-1" />
         </div>
       </section>
 
-      <section className="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-card p-8 md:p-10 border-l-4 border-brand-red">
-          <div className="flex items-start gap-5">
-            <div className="w-16 h-16 rounded-full bg-brand-gradient text-white shrink-0 flex items-center justify-center font-bold text-xl">PM</div>
-            <div>
-              <p className="text-lg italic text-ink/80 leading-relaxed">
-                "Every child who walks through our doors carries unique gifts. Our mission is to help each one discover, develop, and share those gifts with the world."
-              </p>
-              <p className="mt-4 font-semibold text-brand-blue">— The Principal, Miracle Minds</p>
-            </div>
-          </div>
+      {/* ── Intro ── */}
+      <section className="max-w-5xl mx-auto
+                           px-4 pt-6 pb-5
+                           sm:px-8 sm:pt-10 sm:pb-8
+                           md:px-12 md:pt-12 md:pb-10
+                           lg:px-6">
+        <div className="bg-white rounded-xl
+                         p-5
+                         sm:p-7
+                         md:p-8">
+          <p className="text-[#444458]
+                         text-[13.5px] leading-[1.85]
+                         sm:text-[15px]">
+            Miracle Minds is a leading primary school dedicated to providing quality education
+            that nurtures both the mind and the heart. Our experienced teachers, modern
+            facilities, and child-centered approach create an environment where every student
+            can flourish.
+          </p>
+          <p className="text-[#444458] mt-3 sm:mt-4
+                         text-[13.5px] leading-[1.85]
+                         sm:text-[15px]">
+            We blend academic rigor with creative learning, sports, and personal development
+            — ensuring that every child leaves Miracle Minds prepared for the world and
+            inspired to make a difference in it.
+          </p>
         </div>
       </section>
 
-      <section className="py-16 bg-bg-light">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading title="Our Core Values" center />
-          <div className="mt-10 grid grid-cols-2 gap-6">
-            {values.map((v) => (
-              <div key={v.title} className="bg-white rounded-2xl p-6 shadow-card hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center mb-3">
-                  <v.icon className="w-6 h-6" />
-                </div>
-                <h4 className="font-bold text-lg mb-2">{v.title}</h4>
-                <p className="text-sm text-ink/70">{v.desc}</p>
+      {/* ── Vision & Mission ── */}
+      <section className="max-w-5xl mx-auto
+                           px-4 pt-3 pb-3
+                           sm:px-8 sm:pt-4 sm:pb-4
+                           md:px-12
+                           lg:px-6">
+        <div className="grid gap-3
+                         grid-cols-1
+                         md:grid-cols-2
+                         sm:gap-4">
+
+          {/* Vision */}
+          <div className="bg-white rounded-xl overflow-hidden flex">
+            <div className="w-1 sm:w-1.5 bg-[#0f2557] shrink-0" />
+            <div className="flex-1 p-5 sm:p-6 md:p-7">
+              <div className="rounded-lg bg-blue-50 flex items-center justify-center mb-4
+                               w-9 h-9 sm:w-10 sm:h-10">
+                <Star className="text-[#0f2557] w-[18px] h-[18px] sm:w-5 sm:h-5" />
               </div>
-            ))}
+              <h3 className="font-serif font-semibold text-[#0f2557] mb-2
+                              text-[17px] sm:text-[18px] md:text-xl">
+                Our Vision
+              </h3>
+              <p className="text-[#555568]
+                             text-[13px] leading-[1.75]
+                             sm:text-sm sm:leading-relaxed">
+                To be the school of choice for families who seek an inspiring, values-driven
+                education that prepares children to lead with confidence, curiosity, and
+                compassion.
+              </p>
+            </div>
           </div>
+
+          {/* Mission */}
+          <div className="bg-white rounded-xl overflow-hidden flex">
+            <div className="w-1 sm:w-1.5 bg-[#c55a3f] shrink-0" />
+            <div className="flex-1 p-5 sm:p-6 md:p-7">
+              <div className="rounded-lg bg-red-50 flex items-center justify-center mb-4
+                               w-9 h-9 sm:w-10 sm:h-10">
+                <Target className="text-[#c55a3f] w-[18px] h-[18px] sm:w-5 sm:h-5" />
+              </div>
+              <h3 className="font-serif font-semibold text-[#0f2557] mb-2
+                              text-[17px] sm:text-[18px] md:text-xl">
+                Our Mission
+              </h3>
+              <p className="text-[#555568]
+                             text-[13px] leading-[1.75]
+                             sm:text-sm sm:leading-relaxed">
+                To deliver a holistic, student-first education that builds strong fundamentals,
+                nurtures creativity, and develops the character and resilience children need
+                to thrive.
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
-    </>
+
+      {/* ── Core Values ── */}
+      <section className="max-w-5xl mx-auto
+                           px-4 pt-6 pb-10
+                           sm:px-8 sm:pt-8 sm:pb-12
+                           md:px-12 md:pt-10 md:pb-16
+                           lg:px-6">
+        <p className="uppercase font-medium text-[#c55a3f] mb-1
+                       text-[10px] tracking-[2.5px]
+                       sm:text-[11px] sm:tracking-[3px]">
+          What we stand for
+        </p>
+        <h2 className="font-serif font-bold text-[#0f2557] mb-5
+                        text-[20px]
+                        sm:text-2xl sm:mb-6
+                        md:text-3xl md:mb-7">
+          Our Core Values
+        </h2>
+
+        {/*
+          Breakpoints:
+          - Mobile  (default) : 1 column
+          - Tablet  (sm 640+) : 2 columns
+          - Desktop (lg 1024+): 2 columns with larger padding
+        */}
+        <div className="grid gap-3
+                         grid-cols-1
+                         sm:grid-cols-2
+                         sm:gap-4">
+          {values.map(({ icon: Icon, title, desc }) => (
+            <div
+              key={title}
+              className="bg-white rounded-xl flex items-start gap-4 transition-colors
+                          hover:border-[#0f2557] border border-transparent
+                          p-4 sm:p-5 md:p-6"
+            >
+              <div className="rounded-lg bg-blue-50 flex items-center justify-center shrink-0
+                               w-9 h-9 sm:w-10 sm:h-10">
+                <Icon className="text-[#0f2557] w-[18px] h-[18px] sm:w-5 sm:h-5" />
+              </div>
+              <div>
+                <h4 className="font-medium text-[#0f2557] mb-1
+                                text-[13.5px] sm:text-sm md:text-[15px]">
+                  {title}
+                </h4>
+                <p className="text-[#6b6b80] leading-[1.65]
+                               text-[12.5px] sm:text-xs md:text-[13px]">
+                  {desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
   );
 }

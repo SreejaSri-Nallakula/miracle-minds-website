@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="bg-footer-blue text-white mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid md:grid-cols-3 gap-10">
         <div>
-          <LogoBadge size="md" />
+          <LogoBadge size="2xl" />
           <p className="mt-4 text-white/80 text-sm leading-relaxed">
             The School of Excellence — nurturing bright, curious, and confident young minds.
           </p>
