@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { GraduationCap, ShieldCheck, Users, Palette, ArrowRight, Star, BookOpen, Award, ChevronLeft, ChevronRight, Images, ClipboardList, CheckCircle, FileText, UserCheck, CalendarCheck } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
+import BounceCards from "../components/BounceCards";
 
 /* ── Data ───────────────────────────────────────────────── */
 const highlights = [
@@ -323,46 +324,115 @@ export function HomePage() {
           box-shadow: 0 12px 32px rgba(26,91,168,0.12) !important;
         }
         .cta-btn:hover { transform: translateY(-2px) !important; }
+        .hero-shell {
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+        .hero-kicker {
+          background: rgba(255,255,255,0.10);
+          border: 1px solid rgba(255,255,255,0.16);
+          backdrop-filter: blur(8px);
+        }
+        .hero-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr);
+          gap: 36px;
+          align-items: center;
+          justify-items: stretch;
+        }
+        .hero-copy {
+          max-width: 520px;
+          text-align: left;
+          justify-self: start;
+        }
+        .hero-copy h1 {
+          font-size: clamp(2rem, 4.6vw, 4rem);
+          line-height: 0.96;
+          letter-spacing: -0.04em;
+        }
+        .hero-copy p {
+          font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+          line-height: 1.75;
+          max-width: 470px;
+        }
+        .hero-actions {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 24px;
+        }
+        .hero-visual {
+          justify-self: end;
+          width: 100%;
+          max-width: 620px;
+        }
+        @media (max-width: 960px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .hero-copy {
+            max-width: 100% !important;
+          }
+          .hero-visual {
+            justify-self: start !important;
+          }
+        }
       `}</style>
 
       <div className="mm-page">
 
         {/* ── HERO ─────────────────────────────────────────── */}
-        <section style={{ background: "linear-gradient(135deg, #1A5BA8 0%, #0d3d76 50%, #E8272A 100%)", color: "#fff", position: "relative", overflow: "hidden", minHeight: "92vh", display: "flex", alignItems: "center" }}>
-          <div style={{ position: "absolute", top: "-120px", right: "-120px", width: "500px", height: "500px", borderRadius: "50%", background: "rgba(232,39,42,0.18)", zIndex: 0 }} />
-          <div style={{ position: "absolute", bottom: "-80px", left: "-80px", width: "360px", height: "360px", borderRadius: "50%", background: "rgba(255,255,255,0.06)", zIndex: 0 }} />
-          <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1.5px, transparent 1.5px)", backgroundSize: "40px 40px", zIndex: 0 }} />
+        <section className="hero-shell" style={{ background: "linear-gradient(135deg, #1A5BA8 0%, #0f477d 52%, #C82326 100%)", color: "#fff", position: "relative", overflow: "hidden", minHeight: "88vh", display: "flex", alignItems: "center" }}>
+          <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at top left, rgba(255,255,255,0.10) 0, rgba(255,255,255,0.10) 1px, transparent 1px, transparent 28px)", backgroundSize: "30px 30px", opacity: 0.28, zIndex: 0 }} />
+          <div style={{ position: "absolute", top: "-120px", right: "-120px", width: "420px", height: "420px", borderRadius: "50%", background: "rgba(232,39,42,0.16)", filter: "blur(16px)", zIndex: 0 }} />
+          <div style={{ position: "absolute", bottom: "-100px", left: "-90px", width: "320px", height: "320px", borderRadius: "50%", background: "rgba(255,255,255,0.07)", filter: "blur(14px)", zIndex: 0 }} />
+
           <div
             ref={heroRef}
             style={{
-              maxWidth: "900px", margin: "0 auto", padding: "100px 32px 80px",
-              textAlign: "center", position: "relative", zIndex: 1,
+              maxWidth: "1240px",
+              margin: "0 auto",
+              padding: "88px 40px 68px 56px",
+              position: "relative",
+              zIndex: 1,
               opacity: heroVisible ? 1 : 0,
               transform: heroVisible ? "translateY(0)" : "translateY(40px)",
               transition: "opacity 1s ease, transform 1s ease",
             }}
           >
-            <span style={{ display: "inline-block", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "50px", padding: "6px 20px", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "28px" }}>
-              🎓 Admissions Open — 2026–27
-            </span>
-            <h1 style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", fontWeight: 900, lineHeight: 1.08, margin: "0 0 24px", letterSpacing: "-0.02em" }}>
-              Welcome to<br /><span style={{ color: "#FFD54A" }}>Miracle Minds</span>
-            </h1>
-            <p style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)", color: "rgba(255,255,255,0.85)", lineHeight: 1.7, margin: "0 auto 40px", maxWidth: "580px" }}>
-              The School of Excellence — Building Bright Futures through knowledge, character, and creativity.
-            </p>
-            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Link to="/admissions" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#E8272A", color: "#fff", fontWeight: 700, padding: "16px 32px", borderRadius: "50px", textDecoration: "none", fontSize: "1rem", boxShadow: "0 6px 24px rgba(232,39,42,0.4)", transition: "transform 0.2s" }}>
-                Explore Admissions <ArrowRight size={18} />
-              </Link>
-              <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "2px solid rgba(255,255,255,0.5)", color: "#fff", fontWeight: 700, padding: "16px 32px", borderRadius: "50px", textDecoration: "none", fontSize: "1rem" }}>
-                Contact Us
-              </Link>
+            <div className="hero-grid">
+              <div className="hero-copy">
+                <span className="hero-kicker" style={{ display: "inline-flex", alignItems: "center", gap: "8px", borderRadius: "999px", padding: "7px 16px", fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", marginBottom: "18px", textTransform: "uppercase" }}>
+                  <span style={{ width: "7px", height: "7px", borderRadius: "999px", background: "#FFD54A" }} />
+                  Admissions Open — 2026–27
+                </span>
+
+                <h1 style={{ fontWeight: 900, margin: "0 0 16px", textAlign: "left" }}>
+                  A brighter start<br />for every child
+                </h1>
+
+                <p style={{ color: "rgba(255,255,255,0.80)", margin: 0, textAlign: "left" }}>
+                  The School of Excellence with a nurturing environment, strong values, and joyful learning built around each child.
+                </p>
+
+                <div className="hero-actions">
+                  <Link to="/admissions" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#E8272A", color: "#fff", fontWeight: 800, padding: "14px 24px", borderRadius: "999px", textDecoration: "none", fontSize: "0.95rem", boxShadow: "0 10px 24px rgba(232,39,42,0.34)", transition: "transform 0.2s" }}>
+                    Explore Admissions <ArrowRight size={16} />
+                  </Link>
+                  <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.10)", backdropFilter: "blur(10px)", border: "1.5px solid rgba(255,255,255,0.22)", color: "#fff", fontWeight: 800, padding: "14px 24px", borderRadius: "999px", textDecoration: "none", fontSize: "0.95rem" }}>
+                    Contact Us
+                  </Link>
+                </div>
+              </div>
+
+              <div className="hero-visual">
+                <BounceCards containerWidth={600} containerHeight={420} animationDelay={0.12} animationStagger={0.08} />
+              </div>
             </div>
           </div>
-          <div style={{ position: "absolute", bottom: "28px", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", opacity: 0.6 }}>
+
+          <div style={{ position: "absolute", bottom: "28px", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", opacity: 0.7 }}>
             <span style={{ fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#fff" }}>Scroll</span>
-            <div style={{ width: "1px", height: "40px", background: "linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)" }} />
+            <div style={{ width: "1px", height: "40px", background: "linear-gradient(to bottom, rgba(255,255,255,0.95), transparent)" }} />
           </div>
         </section>
 

@@ -15,6 +15,7 @@ export function Footer() {
         </div>
         <div>
           <h4 className="font-semibold mb-3 text-base">Quick Links</h4>
+          <div className="w-10 h-0.5 bg-[#c55a3f] mb-4" />
           <ul className="space-y-1.5 text-sm text-white/80">
             <li><Link to="/" className="hover:text-white">Home</Link></li>
             <li><Link to="/about" className="hover:text-white">About</Link></li>
@@ -24,6 +25,7 @@ export function Footer() {
         </div>
         <div>
           <h4 className="font-semibold mb-3 text-base">Contact</h4>
+          <div className="w-10 h-0.5 bg-[#c55a3f] mb-4" />
           <ul className="space-y-1.5 text-sm text-white/80">
             <li>Sathupally, Siddaram Road</li>
             <li>Sathupalli, Khammam-507303</li>
