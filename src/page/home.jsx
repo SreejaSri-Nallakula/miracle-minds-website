@@ -2,6 +2,12 @@ import { Link } from "react-router-dom";
 import { GraduationCap, ShieldCheck, Users, Palette, ArrowRight } from "lucide-react";
 import { SectionHeading } from "../components/SectionHeading";
 
+const galleryImages = Object.entries(
+  import.meta.glob("../assets/gallery/*.{png,jpg,jpeg,webp,svg}", { eager: true, import: "default" })
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, img]) => img);
+
 const highlights = [
   { icon: GraduationCap, title: "Quality Education", desc: "A strong academic foundation built on modern teaching methods." },
   { icon: ShieldCheck, title: "Safe Environment", desc: "A secure, caring campus where every child feels at home." },
@@ -96,13 +102,21 @@ export function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Glimpses of School Life" />
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="aspect-square rounded-2xl overflow-hidden shadow-card group">
-                <div className="w-full h-full bg-brand-gradient flex items-center justify-center text-white font-semibold text-sm group-hover:scale-110 transition-transform duration-500">
-                  Photo {i}
+            {galleryImages.length > 0 ? (
+              galleryImages.slice(0, 4).map((src, idx) => (
+                <div key={idx} className="aspect-square rounded-2xl overflow-hidden shadow-card group">
+                  <img src={src} alt={`Glimpse ${idx + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              [1, 2, 3, 4].map((i) => (
+                <div key={i} className="aspect-square rounded-2xl overflow-hidden shadow-card group">
+                  <div className="w-full h-full bg-brand-gradient flex items-center justify-center text-white font-semibold text-sm group-hover:scale-110 transition-transform duration-500">
+                    Photo {i}
+                  </div>
+                </div>
+              ))
+            )}
           </div>
           <div className="text-center mt-8">
             <Link to="/gallery" className="inline-flex items-center gap-2 rounded-full bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold px-6 py-3 shadow-card transition-colors">

@@ -40,6 +40,18 @@ const catColour = {
 export function GalleryPage() {
   const [active, setActive]   = useState("All");
   const [lightbox, setLightbox] = useState(null);
+  const [animateIn, setAnimateIn] = useState(false);
+
+  function openLightbox(id) {
+    setLightbox(id);
+    setAnimateIn(false);
+    requestAnimationFrame(() => setAnimateIn(true));
+  }
+
+  function closeLightbox() {
+    setAnimateIn(false);
+    setTimeout(() => setLightbox(null), 200);
+  }
 
   const filtered = active === "All" ? photos : photos.filter((p) => p.cat === active);
   const lightboxPhoto = photos.find((p) => p.id === lightbox);
@@ -119,7 +131,7 @@ export function GalleryPage() {
             return (
               <button
                 key={p.id}
-                onClick={() => setLightbox(p.id)}
+                onClick={() => openLightbox(p.id)}
                 className={`group relative overflow-hidden rounded-xl
                              focus:outline-none focus:ring-2 focus:ring-[#c55a3f]
                              ${p.tall ? "row-span-2" : "row-span-1"}`}
@@ -128,36 +140,16 @@ export function GalleryPage() {
                   <img
                     src={p.src}
                     alt={p.label}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105 filter"
                   />
                 ) : (
                   <div
-                    className="w-full h-full flex items-end transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full flex items-end transition-transform duration-500 group-hover:scale-105 group-hover:brightness-105 filter"
                     style={{ background: colours.bg }}
                   />
                 )}
-
-                {/* Label overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent
-                                 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                                 flex items-end p-3 sm:p-4">
-                  <div>
-                    <span className="block text-white font-medium leading-tight
-                                      text-[11px] sm:text-[13px]">
-                      {p.label}
-                    </span>
-                    <span className="block mt-0.5 text-white/70 text-[10px] sm:text-[11px] uppercase tracking-wider">
-                      {p.cat}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Always-visible category pill */}
-                <span className="absolute top-2 left-2 sm:top-3 sm:left-3
-                                  px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-medium
-                                  bg-white/15 text-white backdrop-blur-sm">
-                  {p.cat}
-                </span>
               </button>
             );
           })}
@@ -168,11 +160,11 @@ export function GalleryPage() {
       {lightbox !== null && (
         <div
           className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-8"
-          onClick={() => setLightbox(null)}
+          onClick={() => closeLightbox()}
         >
           <button
             aria-label="Close lightbox"
-            onClick={() => setLightbox(null)}
+            onClick={() => closeLightbox()}
             className="absolute top-4 right-4 sm:top-6 sm:right-6
                         w-9 h-9 sm:w-10 sm:h-10 rounded-full
                         bg-white/10 hover:bg-white/20 transition-colors
@@ -185,28 +177,24 @@ export function GalleryPage() {
             className="w-full max-w-3xl rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {lightboxPhoto?.src ? (
-              <img
-                src={lightboxPhoto.src}
-                alt={lightboxPhoto.label}
-                className="w-full aspect-video object-cover"
-              />
-            ) : (
-              <div
-                className="w-full aspect-video flex items-center justify-center"
-                style={{ background: catColour[lightboxPhoto?.cat]?.bg }}
-              />
-            )}
-
-            <div className="bg-white px-5 py-4 sm:px-6 sm:py-5">
-              <p className="font-serif font-semibold text-[#0f2557]
-                             text-[16px] sm:text-[18px]">
-                {lightboxPhoto?.label}
-              </p>
-              <p className="text-[#c55a3f] uppercase text-[10px] tracking-[2px] mt-1 font-medium">
-                {lightboxPhoto?.cat}
-              </p>
+            <div className={`w-full max-w-3xl rounded-2xl overflow-hidden transform transition-all duration-200 ${animateIn ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} onClick={(e) => e.stopPropagation()}>
+              {lightboxPhoto?.src ? (
+                <img
+                  src={lightboxPhoto.src}
+                  alt={lightboxPhoto.label}
+                  loading="eager"
+                  decoding="async"
+                  className="w-full aspect-video object-cover"
+                />
+              ) : (
+                <div
+                  className="w-full aspect-video flex items-center justify-center"
+                  style={{ background: catColour[lightboxPhoto?.cat]?.bg }}
+                />
+              )}
             </div>
+
+            {/* Intentionally no caption: lightbox displays only the image */}
           </div>
         </div>
       )}
