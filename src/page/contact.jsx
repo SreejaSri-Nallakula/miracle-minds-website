@@ -45,17 +45,17 @@ export function ContactPage() {
                           lg:px-20 lg:pt-20 lg:pb-20">
 
         {/* School building photo — change HERO_IMAGE at the top of the file */}
-        <img
-          src={HERO_IMAGE}
-          alt="Miracle Minds School"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-20"
-        />
+          <img
+            src={HERO_IMAGE}
+            alt="Miracle Minds School"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-10"
+          />
 
         {/* diagonal grid overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-5"
-          style={{ backgroundImage: "repeating-linear-gradient(45deg,white 0,white 1px,transparent 1px,transparent 12px)" }}
-        />
+          <div
+            className="absolute inset-0 pointer-events-none opacity-10"
+            style={{ backgroundImage: "repeating-linear-gradient(45deg,white 0,white 1px,transparent 1px,transparent 12px)" }}
+          />
 
         {/* dark gradient so text stays readable */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0f2557]/90 via-[#0f2557]/60 to-transparent" />
@@ -120,7 +120,9 @@ export function ContactPage() {
                                    text-[13px] sm:text-sm">School Address</p>
                     <p className="text-[#6b6b80] leading-[1.65] text-[12.5px] sm:text-[13px]">
                       Miracle Minds – The School of Excellence<br />
-                      Andhra Pradesh, India
+                      Sathupally, Siddaram Road<br />
+                      Sathupalli, Khammam - 507303<br />
+                      Telangana, India
                     </p>
                   </div>
                 </div>
@@ -135,9 +137,9 @@ export function ContactPage() {
                     <p className="font-medium text-[#0f2557] mb-0.5
                                    text-[13px] sm:text-sm">Phone</p>
                     <p className="text-[#6b6b80] text-[12.5px] sm:text-[13px]">
-                      <a href="tel:+91 9849140520"
+                      <a href="tel:+91-9849140520"
                          className="hover:text-[#c55a3f] transition-colors">
-                        +91 9849140520
+                        +91-9849140520
                       </a>
                       {" / "}
                       <a href="tel:+91 9063614513"
@@ -190,13 +192,12 @@ export function ContactPage() {
             </div>
 
             {/* Map */}
-            <div className="bg-white rounded-xl overflow-hidden
-                             h-[200px] sm:h-[220px] md:h-[240px]">
+            <div className="bg-white rounded-xl overflow-hidden h-[200px] sm:h-[220px] md:h-[240px]">
               <iframe
                 title="School location map"
                 loading="lazy"
                 className="w-full h-full border-0"
-                src="https://www.google.com/maps?q=Andhra+Pradesh,India&output=embed"
+                src="https://www.google.com/maps?q=Sathupalli,Khammam,Telangana,India&output=embed"
               />
             </div>
 

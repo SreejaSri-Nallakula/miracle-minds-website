@@ -1,147 +1,422 @@
 import { Link } from "react-router-dom";
-import { GraduationCap, ShieldCheck, Users, Palette, ArrowRight } from "lucide-react";
-import { SectionHeading } from "../components/SectionHeading";
+import { GraduationCap, ShieldCheck, Users, Palette, ArrowRight, Star, BookOpen, Award, ChevronLeft, ChevronRight, Images, ClipboardList, CheckCircle, FileText, UserCheck, CalendarCheck } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
-const galleryImages = Object.entries(
-  import.meta.glob("../assets/gallery/*.{png,jpg,jpeg,webp,svg}", { eager: true, import: "default" })
-)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([, img]) => img);
-
+/* ── Data ───────────────────────────────────────────────── */
 const highlights = [
-  { icon: GraduationCap, title: "Quality Education", desc: "A strong academic foundation built on modern teaching methods." },
-  { icon: ShieldCheck, title: "Safe Environment", desc: "A secure, caring campus where every child feels at home." },
-  { icon: Users, title: "Experienced Teachers", desc: "Dedicated educators passionate about every child's growth." },
-  { icon: Palette, title: "Fun & Creative Activities", desc: "Art, music, sports and more — learning beyond textbooks." },
+  { 
+    icon: GraduationCap, 
+    title: "Quality Education", 
+    desc: "Strong basics with modern teaching that builds thinking and curiosity." 
+  },
+  { 
+    icon: ShieldCheck, 
+    title: "Safe Environment", 
+    desc: "A safe and caring space where every child feels comfortable and confident." 
+  },
+  { 
+    icon: Users, 
+    title: "Experienced Teachers", 
+    desc: "Supportive teachers who guide every child with care and attention." 
+  },
+  { 
+    icon: Palette, 
+    title: "Fun & Creative Activities", 
+    desc: "Art, music, sports, and activities that make learning enjoyable." 
+  },
 ];
 
 const updates = [
-  { date: "May 28, 2026", msg: "Annual Day celebrations scheduled for June 5, 2026." },
-  { date: "May 20, 2026", msg: "Summer holidays begin from June 10. School reopens on July 1." },
-  { date: "May 12, 2026", msg: "Admissions open for the 2026–26 academic year. Apply early!" },
+  { date: "May 28, 2026", msg: "Annual Day celebrations scheduled for June 5, 2026.", icon: Star },
+  { date: "May 20, 2026", msg: "Summer holidays begin from June 10. School reopens on July 1.", icon: BookOpen },
+  { date: "May 12, 2026", msg: "Admissions open for the 2026–27 academic year. Apply early!", icon: Award },
 ];
 
-export function HomePage() {
-  return (
-    <>
-      <section className="bg-brand-gradient text-white relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 15% 25%, white 1.5px, transparent 1.5px), radial-gradient(circle at 85% 75%, white 1px, transparent 1px)",
-            backgroundSize: "50px 50px, 30px 30px",
-          }}
-        />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative grid md:grid-cols-2 gap-10 items-center">
-          <div className="animate-fade-up">
-            <span className="inline-block bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-5">Admissions Open 2026</span>
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">Welcome to Miracle Minds</h1>
-            <p className="mt-4 text-lg md:text-xl text-white/90">The School of Excellence — Building Bright Futures</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/admissions" className="inline-flex items-center gap-2 rounded-full bg-brand-red hover:bg-brand-red-dark text-white font-semibold px-6 py-3 shadow-card transition-colors">
-                Explore Admissions <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link to="/contact" className="inline-flex items-center gap-2 rounded-full border-2 border-white text-white font-semibold px-6 py-3 hover:bg-white hover:text-brand-blue transition-colors">
-                Contact Us
-              </Link>
-            </div>
-          </div>
-          <div className="hidden md:flex justify-center animate-fade-up">
-            <SchoolIllustration />
-          </div>
-        </div>
-      </section>
 
-      <section className="py-16 bg-bg-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {highlights.map((h) => (
-            <div key={h.title} className="bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all border-t-4 border-brand-red">
-              <div className="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-4">
-                <h.icon className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-lg mb-2">{h.title}</h3>
-              <p className="text-sm text-ink/70 leading-relaxed">{h.desc}</p>
+
+const admissionSteps = [
+  {
+    icon: FileText,
+    step: "Step 1",
+    title: "Fill Application Form",
+    desc: " Fill out the online application form with your child’s details, previous school information, and parent or guardian details.",
+    color: "#1A5BA8",
+  },
+  {
+    icon: CalendarCheck,
+    step: "Step 2",
+    title: "Schedule Assessment",
+    desc: "Book a suitable time for your child’s assessment. Our team will guide you through the process.",
+    color: "#E8272A",
+  },
+  {
+    icon: UserCheck,
+    step: "Step 3",
+    title: "Interview & Visit",
+    desc: "Attend a friendly interaction session and take a guided tour of the campus to see Miracle Minds in person.",
+    color: "#1A5BA8",
+  },
+  {
+    icon: CheckCircle,
+    step: "Step 4",
+    title: "Confirmation & Joining",
+    desc: "Receive your admission offer, complete fee payment, and collect the welcome kit. Your child's journey begins here!",
+    color: "#E8272A",
+  },
+];
+
+const galleryItems = [
+  { label: "Annual Sports Day", category: "Sports", bg: "linear-gradient(135deg, #1A5BA8, #0d3d76)", emoji: "🏆" },
+  { label: "Art Exhibition", category: "Creative Arts", bg: "linear-gradient(135deg, #E8272A, #b51e1f)", emoji: "🎨" },
+  { label: "Science Fair", category: "STEM", bg: "linear-gradient(135deg, #0d3d76, #1A5BA8)", emoji: "🔬" },
+  { label: "Cultural Fest", category: "Culture", bg: "linear-gradient(135deg, #b51e1f, #E8272A)", emoji: "🎭" },
+  { label: "Graduation Ceremony", category: "Events", bg: "linear-gradient(135deg, #111827, #1A5BA8)", emoji: "🎓" },
+  { label: "Music Concert", category: "Performing Arts", bg: "linear-gradient(135deg, #E8272A, #0d3d76)", emoji: "🎵" },
+];
+
+/* ── Hooks ──────────────────────────────────────────────── */
+function useParallax(speed = 0.12) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      el.style.transform = `translateY(${center * speed}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [speed]);
+  return ref;
+}
+
+function useReveal(threshold = 0.15) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+/* ── Admissions Card (parallax from LEFT) ───────────────── */
+function AdmissionsCard() {
+  const [step, setStep] = useState(0);
+  const [textRef, textVisible] = useReveal(0.1);
+  const parallaxRef = useParallax(-0.07);
+  const current = admissionSteps[step];
+  const Icon = current.icon;
+
+  return (
+    <div className="parallax-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "560px", alignItems: "stretch" }}>
+      {/* LEFT: text slides in */}
+      <div
+        ref={textRef}
+        style={{
+          padding: "72px 56px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          background: "#fff",
+          opacity: textVisible ? 1 : 0,
+          transform: textVisible ? "translateX(0)" : "translateX(-70px)",
+          transition: "opacity 0.8s ease, transform 0.8s ease",
+        }}
+      >
+        <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#E8272A", marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+          <ClipboardList size={14} /> Admissions 2026–27
+        </span>
+        <h2 style={{ fontSize: "clamp(1.7rem, 2.8vw, 2.4rem)", fontWeight: 900, color: "#111827", margin: "0 0 12px", lineHeight: 1.15 }}>
+          Your Child's Journey<br />Starts Here
+        </h2>
+        <p style={{ fontSize: "0.95rem", color: "#6B7280", lineHeight: 1.8, margin: "0 0 32px", maxWidth: "400px" }}>
+          Joining Miracle Minds is simple. Follow our 4-step process and secure your child's seat in one of the finest schools in the region.
+        </p>
+
+        {/* Step card */}
+        <div style={{ background: "#F9FAFB", borderRadius: "16px", padding: "24px", borderLeft: `4px solid ${current.color}`, marginBottom: "24px", minHeight: "130px", transition: "all 0.4s ease" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+            <div style={{ width: "38px", height: "38px", borderRadius: "10px", background: current.color, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Icon size={18} color="#fff" />
             </div>
+            <div>
+              <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#9CA3AF" }}>{current.step}</div>
+              <div style={{ fontSize: "1rem", fontWeight: 700, color: "#111827" }}>{current.title}</div>
+            </div>
+          </div>
+          <p style={{ fontSize: "0.875rem", color: "#6B7280", lineHeight: 1.7, margin: 0 }}>{current.desc}</p>
+        </div>
+
+        {/* Nav dots + arrows */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
+          <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #E5E7EB", background: "none", cursor: step === 0 ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", opacity: step === 0 ? 0.4 : 1, transition: "all 0.2s" }}>
+            <ChevronLeft size={16} color="#374151" />
+          </button>
+          <div style={{ display: "flex", gap: "6px" }}>
+            {admissionSteps.map((_, i) => (
+              <button key={i} onClick={() => setStep(i)} style={{ width: i === step ? "24px" : "8px", height: "8px", borderRadius: "4px", background: i === step ? "#E8272A" : "#E5E7EB", border: "none", cursor: "pointer", transition: "all 0.3s ease", padding: 0 }} />
+            ))}
+          </div>
+          <button onClick={() => setStep(s => Math.min(admissionSteps.length - 1, s + 1))} disabled={step === admissionSteps.length - 1} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #E5E7EB", background: "none", cursor: step === admissionSteps.length - 1 ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", opacity: step === admissionSteps.length - 1 ? 0.4 : 1, transition: "all 0.2s" }}>
+            <ChevronRight size={16} color="#374151" />
+          </button>
+          <span style={{ fontSize: "12px", color: "#9CA3AF", marginLeft: "4px" }}>{step + 1} of {admissionSteps.length}</span>
+        </div>
+
+        <Link to="/admissions" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#E8272A", color: "#fff", fontWeight: 700, fontSize: "0.9rem", padding: "13px 26px", borderRadius: "50px", textDecoration: "none", width: "fit-content", boxShadow: "0 4px 18px rgba(232,39,42,0.3)", transition: "transform 0.2s, box-shadow 0.2s" }}>
+          Apply Now <ArrowRight size={16} />
+        </Link>
+      </div>
+
+      {/* RIGHT: parallax visual panel */}
+      <div style={{ position: "relative", overflow: "hidden", background: "linear-gradient(135deg, #1A5BA8 0%, #0d3d76 100%)", minHeight: "420px" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.1) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        <div ref={parallaxRef} style={{ position: "absolute", inset: "-60px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "20px", padding: "40px" }}>
+          {/* 4 step pills */}
+          {admissionSteps.map((s, i) => (
+            <button key={i} onClick={() => setStep(i)} style={{ width: "100%", maxWidth: "300px", background: i === step ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.08)", border: i === step ? "1.5px solid rgba(255,255,255,0.6)" : "1px solid rgba(255,255,255,0.15)", borderRadius: "14px", padding: "14px 20px", cursor: "pointer", display: "flex", alignItems: "center", gap: "14px", transition: "all 0.3s ease", transform: i === step ? "scale(1.03)" : "scale(1)" }}>
+              <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: i === step ? "#fff" : "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                {(() => { const SI = s.icon; return <SI size={16} color={i === step ? "#1A5BA8" : "#fff"} />; })()}
+              </div>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.55)", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>{s.step}</div>
+                <div style={{ fontSize: "0.85rem", color: "#fff", fontWeight: 700 }}>{s.title}</div>
+              </div>
+              {i === step && <ChevronRight size={14} color="rgba(255,255,255,0.7)" style={{ marginLeft: "auto" }} />}
+            </button>
           ))}
         </div>
-      </section>
+      </div>
+    </div>
+  );
+}
 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <SectionHeading eyebrow="About Us" title="Where Every Child Shines" />
-            <p className="mt-5 text-ink/75 leading-relaxed">
-              At Miracle Minds, we believe every child carries a spark of brilliance. Our holistic approach blends academic excellence with creativity, character, and curiosity — giving young learners the foundation to dream big and achieve more.
-            </p>
-            <Link to="/about" className="inline-flex items-center gap-1 mt-5 text-brand-red font-semibold hover:gap-2 transition-all">
-              Learn More About Us <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="flex justify-center">
-            <SchoolIllustration />
-          </div>
-        </div>
-      </section>
+/* ── Gallery Card (parallax from RIGHT) ─────────────────── */
+function GalleryCard() {
+  const [active, setActive] = useState(0);
+  const [textRef, textVisible] = useReveal(0.1);
+  const parallaxRef = useParallax(0.07);
 
-      <section className="py-16 bg-bg-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading title="Latest Updates" />
-          <div className="mt-10 grid md:grid-cols-3 gap-6">
-            {updates.map((u, i) => (
-              <div key={i} className="bg-white rounded-xl p-6 shadow-card border-l-4 border-brand-blue hover:shadow-card-hover transition-shadow">
-                <p className="text-xs uppercase tracking-wider font-semibold text-brand-blue">{u.date}</p>
-                <p className="mt-2 text-ink leading-relaxed">{u.msg}</p>
+  const prev = useCallback(() => setActive(a => (a - 1 + galleryItems.length) % galleryItems.length), []);
+  const next = useCallback(() => setActive(a => (a + 1) % galleryItems.length), []);
+
+  const visible3 = [
+    galleryItems[(active - 1 + galleryItems.length) % galleryItems.length],
+    galleryItems[active],
+    galleryItems[(active + 1) % galleryItems.length],
+  ];
+
+  return (
+    <div className="parallax-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "560px", alignItems: "stretch" }}>
+      {/* LEFT: parallax visual */}
+      <div style={{ position: "relative", overflow: "hidden", background: "linear-gradient(135deg, #E8272A 0%, #b51e1f 100%)", minHeight: "420px" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.1) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
+        <div ref={parallaxRef} style={{ position: "absolute", inset: "-60px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px", width: "100%", maxWidth: "320px", padding: "32px 24px" }}>
+            {visible3.map((item, idx) => (
+              <div key={idx} onClick={() => { if (idx === 0) prev(); else if (idx === 2) next(); }} style={{ background: idx === 1 ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.08)", border: idx === 1 ? "1.5px solid rgba(255,255,255,0.55)" : "1px solid rgba(255,255,255,0.12)", borderRadius: "16px", padding: "16px 20px", cursor: idx !== 1 ? "pointer" : "default", display: "flex", alignItems: "center", gap: "14px", transition: "all 0.35s ease", transform: idx === 1 ? "scale(1.04)" : "scale(0.96)", opacity: idx === 1 ? 1 : 0.65 }}>
+                <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: item.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", flexShrink: 0 }}>
+                  {item.emoji}
+                </div>
+                <div>
+                  <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.6)", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.category}</div>
+                  <div style={{ fontSize: "0.9rem", color: "#fff", fontWeight: 700, marginTop: "2px" }}>{item.label}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading title="Glimpses of School Life" />
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {galleryImages.length > 0 ? (
-              galleryImages.slice(0, 4).map((src, idx) => (
-                <div key={idx} className="aspect-square rounded-2xl overflow-hidden shadow-card group">
-                  <img src={src} alt={`Glimpse ${idx + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
-              ))
-            ) : (
-              [1, 2, 3, 4].map((i) => (
-                <div key={i} className="aspect-square rounded-2xl overflow-hidden shadow-card group">
-                  <div className="w-full h-full bg-brand-gradient flex items-center justify-center text-white font-semibold text-sm group-hover:scale-110 transition-transform duration-500">
-                    Photo {i}
-                  </div>
-                </div>
-              ))
-            )}
+      {/* RIGHT: text slides in */}
+      <div
+        ref={textRef}
+        style={{
+          padding: "72px 56px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          background: "#fff",
+          opacity: textVisible ? 1 : 0,
+          transform: textVisible ? "translateX(0)" : "translateX(70px)",
+          transition: "opacity 0.8s ease, transform 0.8s ease",
+        }}
+      >
+        <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#1A5BA8", marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+          <Images size={14} /> School Life & Gallery
+        </span>
+        <h2 style={{ fontSize: "clamp(1.7rem, 2.8vw, 2.4rem)", fontWeight: 900, color: "#111827", margin: "0 0 12px", lineHeight: 1.15 }}>
+          Glimpses of Our<br />Vibrant School Life
+        </h2>
+        <p style={{ fontSize: "0.95rem", color: "#6B7280", lineHeight: 1.8, margin: "0 0 28px", maxWidth: "400px" }}>
+          From sports championships to science fairs, cultural festivals to music concerts — life at Miracle Minds is rich, joyful, and full of unforgettable memories.
+        </p>
+
+        {/* Active gallery detail */}
+        <div style={{ background: "#F9FAFB", borderRadius: "16px", padding: "20px 22px", borderLeft: "4px solid #1A5BA8", marginBottom: "24px", display: "flex", alignItems: "center", gap: "14px" }}>
+          <div style={{ width: "52px", height: "52px", borderRadius: "12px", background: galleryItems[active].bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", flexShrink: 0 }}>
+            {galleryItems[active].emoji}
           </div>
-          <div className="text-center mt-8">
-            <Link to="/gallery" className="inline-flex items-center gap-2 rounded-full bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold px-6 py-3 shadow-card transition-colors">
-              View Full Gallery <ArrowRight className="w-4 h-4" />
-            </Link>
+          <div>
+            <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#9CA3AF" }}>{galleryItems[active].category}</div>
+            <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#111827" }}>{galleryItems[active].label}</div>
           </div>
         </div>
-      </section>
-    </>
+
+        {/* Nav arrows + dots */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
+          <button onClick={prev} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #E5E7EB", background: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}>
+            <ChevronLeft size={16} color="#374151" />
+          </button>
+          <div style={{ display: "flex", gap: "6px" }}>
+            {galleryItems.map((_, i) => (
+              <button key={i} onClick={() => setActive(i)} style={{ width: i === active ? "24px" : "8px", height: "8px", borderRadius: "4px", background: i === active ? "#1A5BA8" : "#E5E7EB", border: "none", cursor: "pointer", transition: "all 0.3s ease", padding: 0 }} />
+            ))}
+          </div>
+          <button onClick={next} style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #E5E7EB", background: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}>
+            <ChevronRight size={16} color="#374151" />
+          </button>
+          <span style={{ fontSize: "12px", color: "#9CA3AF", marginLeft: "4px" }}>{active + 1} of {galleryItems.length}</span>
+        </div>
+
+        <Link to="/gallery" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#1A5BA8", color: "#fff", fontWeight: 700, fontSize: "0.9rem", padding: "13px 26px", borderRadius: "50px", textDecoration: "none", width: "fit-content", boxShadow: "0 4px 18px rgba(26,91,168,0.3)", transition: "transform 0.2s, box-shadow 0.2s" }}>
+          View Full Gallery <ArrowRight size={16} />
+        </Link>
+      </div>
+    </div>
   );
 }
 
-function SchoolIllustration() {
+/* ── Main Page ──────────────────────────────────────────── */
+export function HomePage() {
+  const [heroRef, heroVisible] = useReveal(0.01);
+
   return (
-    <svg viewBox="0 0 320 240" className="w-full max-w-md drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
-      <rect x="40" y="80" width="240" height="130" rx="10" fill="#fff" />
-      <polygon points="40,80 160,20 280,80" fill="#E8272A" />
-      <rect x="140" y="120" width="40" height="90" fill="#1A5BA8" />
-      <rect x="65" y="120" width="50" height="40" fill="#1A5BA8" rx="3" />
-      <rect x="205" y="120" width="50" height="40" fill="#1A5BA8" rx="3" />
-      <rect x="65" y="170" width="50" height="40" fill="#1A5BA8" rx="3" />
-      <rect x="205" y="170" width="50" height="40" fill="#1A5BA8" rx="3" />
-      <circle cx="160" cy="55" r="8" fill="#fff" />
-      <polygon points="160,45 162,52 169,52 163,57 166,64 160,60 154,64 157,57 151,52 158,52" fill="#FFD54A" />
-      <rect x="155" y="195" width="10" height="15" fill="#fff" />
-    </svg>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+        *, *::before, *::after { box-sizing: border-box; }
+        .mm-page { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+
+        @media (max-width: 768px) {
+          .parallax-row {
+            grid-template-columns: 1fr !important;
+          }
+          .parallax-row > div:first-child {
+            min-height: 320px !important;
+          }
+        }
+
+        .stat-card:hover { transform: translateY(-4px) !important; }
+        .highlight-card:hover {
+          transform: translateY(-6px) !important;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.10) !important;
+        }
+        .update-card:hover {
+          transform: translateY(-2px) !important;
+          box-shadow: 0 12px 32px rgba(26,91,168,0.12) !important;
+        }
+        .cta-btn:hover { transform: translateY(-2px) !important; }
+      `}</style>
+
+      <div className="mm-page">
+
+        {/* ── HERO ─────────────────────────────────────────── */}
+        <section style={{ background: "linear-gradient(135deg, #1A5BA8 0%, #0d3d76 50%, #E8272A 100%)", color: "#fff", position: "relative", overflow: "hidden", minHeight: "92vh", display: "flex", alignItems: "center" }}>
+          <div style={{ position: "absolute", top: "-120px", right: "-120px", width: "500px", height: "500px", borderRadius: "50%", background: "rgba(232,39,42,0.18)", zIndex: 0 }} />
+          <div style={{ position: "absolute", bottom: "-80px", left: "-80px", width: "360px", height: "360px", borderRadius: "50%", background: "rgba(255,255,255,0.06)", zIndex: 0 }} />
+          <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1.5px, transparent 1.5px)", backgroundSize: "40px 40px", zIndex: 0 }} />
+          <div
+            ref={heroRef}
+            style={{
+              maxWidth: "900px", margin: "0 auto", padding: "100px 32px 80px",
+              textAlign: "center", position: "relative", zIndex: 1,
+              opacity: heroVisible ? 1 : 0,
+              transform: heroVisible ? "translateY(0)" : "translateY(40px)",
+              transition: "opacity 1s ease, transform 1s ease",
+            }}
+          >
+            <span style={{ display: "inline-block", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "50px", padding: "6px 20px", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "28px" }}>
+              🎓 Admissions Open — 2026–27
+            </span>
+            <h1 style={{ fontSize: "clamp(2.6rem, 6vw, 5rem)", fontWeight: 900, lineHeight: 1.08, margin: "0 0 24px", letterSpacing: "-0.02em" }}>
+              Welcome to<br /><span style={{ color: "#FFD54A" }}>Miracle Minds</span>
+            </h1>
+            <p style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)", color: "rgba(255,255,255,0.85)", lineHeight: 1.7, margin: "0 auto 40px", maxWidth: "580px" }}>
+              The School of Excellence — Building Bright Futures through knowledge, character, and creativity.
+            </p>
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link to="/admissions" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#E8272A", color: "#fff", fontWeight: 700, padding: "16px 32px", borderRadius: "50px", textDecoration: "none", fontSize: "1rem", boxShadow: "0 6px 24px rgba(232,39,42,0.4)", transition: "transform 0.2s" }}>
+                Explore Admissions <ArrowRight size={18} />
+              </Link>
+              <Link to="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "2px solid rgba(255,255,255,0.5)", color: "#fff", fontWeight: 700, padding: "16px 32px", borderRadius: "50px", textDecoration: "none", fontSize: "1rem" }}>
+                Contact Us
+              </Link>
+            </div>
+          </div>
+          <div style={{ position: "absolute", bottom: "28px", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", opacity: 0.6 }}>
+            <span style={{ fontSize: "11px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#fff" }}>Scroll</span>
+            <div style={{ width: "1px", height: "40px", background: "linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)" }} />
+          </div>
+        </section>
+
+        {/* ── ADMISSIONS PARALLAX CARD ─────────────────────── */}
+        <AdmissionsCard />
+
+        {/* ── GALLERY PARALLAX CARD ────────────────────────── */}
+        <GalleryCard />
+
+        {/* ── HIGHLIGHTS ──────────────────────────────────── */}
+        <section style={{ padding: "80px 32px", background: "#F9FAFB" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: "56px" }}>
+              <span style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#E8272A" }}>Why Choose Us</span>
+              <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 800, color: "#111827", margin: "12px 0 0" }}>Everything a Child Needs to Thrive</h2>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "24px" }}>
+              {highlights.map((h, i) => (
+                <div key={i} className="highlight-card" style={{ background: "#fff", borderRadius: "20px", padding: "32px 24px", boxShadow: "0 4px 16px rgba(0,0,0,0.06)", borderTop: `4px solid ${i % 2 === 0 ? "#E8272A" : "#1A5BA8"}`, transition: "transform 0.3s, box-shadow 0.3s" }}>
+                  <div style={{ width: "52px", height: "52px", borderRadius: "14px", background: i % 2 === 0 ? "rgba(232,39,42,0.08)" : "rgba(26,91,168,0.08)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px" }}>
+                    <h.icon size={24} color={i % 2 === 0 ? "#E8272A" : "#1A5BA8"} />
+                  </div>
+                  <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#111827", margin: "0 0 10px" }}>{h.title}</h3>
+                  <p style={{ fontSize: "0.9rem", color: "#6B7280", lineHeight: 1.7, margin: 0 }}>{h.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── UPDATES ─────────────────────────────────────── */}
+        <section style={{ padding: "80px 32px", background: "#fff" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+            <div style={{ textAlign: "center", marginBottom: "56px" }}>
+              <span style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1A5BA8" }}>News & Events</span>
+              <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 800, color: "#111827", margin: "12px 0 0" }}>Latest Updates</h2>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
+              {updates.map((u, i) => (
+                <div key={i} className="update-card" style={{ background: "#F9FAFB", borderRadius: "16px", padding: "28px 24px", borderLeft: `5px solid ${i === 0 ? "#E8272A" : "#1A5BA8"}`, transition: "box-shadow 0.3s, transform 0.3s", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+                    <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: i === 0 ? "rgba(232,39,42,0.1)" : "rgba(26,91,168,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <u.icon size={18} color={i === 0 ? "#E8272A" : "#1A5BA8"} />
+                    </div>
+                    <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: i === 0 ? "#E8272A" : "#1A5BA8" }}>{u.date}</span>
+                  </div>
+                  <p style={{ fontSize: "0.95rem", color: "#374151", lineHeight: 1.7, margin: 0 }}>{u.msg}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </>
   );
 }
