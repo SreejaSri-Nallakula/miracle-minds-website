@@ -1,10 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { GraduationCap, ShieldCheck, Users, Palette, ArrowRight } from "lucide-react";
 import { SectionHeading } from "../components/SectionHeading";
-
-export const Route = createFileRoute("/")({
-  component: Home,
-});
 
 const highlights = [
   { icon: GraduationCap, title: "Quality Education", desc: "A strong academic foundation built on modern teaching methods." },
@@ -19,13 +15,18 @@ const updates = [
   { date: "May 12, 2025", msg: "Admissions open for the 2025–26 academic year. Apply early!" },
 ];
 
-function Home() {
+export function HomePage() {
   return (
     <>
-      {/* HERO */}
       <section className="bg-brand-gradient text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{ backgroundImage: "radial-gradient(circle at 15% 25%, white 1.5px, transparent 1.5px), radial-gradient(circle at 85% 75%, white 1px, transparent 1px)", backgroundSize: "50px 50px, 30px 30px" }} />
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 15% 25%, white 1.5px, transparent 1.5px), radial-gradient(circle at 85% 75%, white 1px, transparent 1px)",
+            backgroundSize: "50px 50px, 30px 30px",
+          }}
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative grid md:grid-cols-2 gap-10 items-center">
           <div className="animate-fade-up">
             <span className="inline-block bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-5">Admissions Open 2025</span>
@@ -46,7 +47,6 @@ function Home() {
         </div>
       </section>
 
-      {/* HIGHLIGHTS */}
       <section className="py-16 bg-bg-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {highlights.map((h) => (
@@ -61,7 +61,6 @@ function Home() {
         </div>
       </section>
 
-      {/* ABOUT PREVIEW */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
           <div>
@@ -79,7 +78,6 @@ function Home() {
         </div>
       </section>
 
-      {/* UPDATES */}
       <section className="py-16 bg-bg-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Latest Updates" />
@@ -94,12 +92,11 @@ function Home() {
         </div>
       </section>
 
-      {/* GALLERY PREVIEW */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Glimpses of School Life" />
           <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1,2,3,4].map((i) => (
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className="aspect-square rounded-2xl overflow-hidden shadow-card group">
                 <div className="w-full h-full bg-brand-gradient flex items-center justify-center text-white font-semibold text-sm group-hover:scale-110 transition-transform duration-500">
                   Photo {i}

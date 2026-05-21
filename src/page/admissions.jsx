@@ -1,10 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Check, Phone } from "lucide-react";
 import { PageHero } from "../components/PageHero";
-
-export const Route = createFileRoute("/admissions")({
-  component: Admissions,
-});
 
 const steps = [
   { n: 1, title: "Fill Inquiry Form", desc: "Submit a quick online or in-person inquiry to begin your child's admission journey." },
@@ -21,7 +16,7 @@ const docs = [
   "Address proof",
 ];
 
-function Admissions() {
+export function AdmissionsPage() {
   return (
     <>
       <PageHero title="Join the Miracle Minds Family" subtitle="A simple, transparent admissions process designed with families in mind." />
@@ -48,7 +43,7 @@ function Admissions() {
             <ul className="grid sm:grid-cols-2 gap-3">
               {docs.map((d) => (
                 <li key={d} className="flex items-start gap-3">
-                  <span className="mt-0.5 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center flex-shrink-0">
+                  <span className="mt-0.5 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
                     <Check className="w-4 h-4" />
                   </span>
                   <span className="text-ink/80">{d}</span>

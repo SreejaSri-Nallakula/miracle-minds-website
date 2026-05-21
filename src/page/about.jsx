@@ -1,11 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Target, Star, BookOpen, Heart, Lightbulb, Trophy } from "lucide-react";
 import { PageHero } from "../components/PageHero";
 import { SectionHeading } from "../components/SectionHeading";
-
-export const Route = createFileRoute("/about")({
-  component: About,
-});
 
 const values = [
   { icon: BookOpen, title: "Excellence", desc: "Pursuing the highest standards in everything we do." },
@@ -14,7 +9,7 @@ const values = [
   { icon: Trophy, title: "Integrity", desc: "Building character through honesty and responsibility." },
 ];
 
-function About() {
+export function AboutPage() {
   return (
     <>
       <PageHero title="About Miracle Minds" subtitle="A nurturing space where children grow into confident, curious, and compassionate learners." />
@@ -54,7 +49,7 @@ function About() {
       <section className="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-card p-8 md:p-10 border-l-4 border-brand-red">
           <div className="flex items-start gap-5">
-            <div className="w-16 h-16 rounded-full bg-brand-gradient text-white flex-shrink-0 flex items-center justify-center font-bold text-xl">PM</div>
+            <div className="w-16 h-16 rounded-full bg-brand-gradient text-white shrink-0 flex items-center justify-center font-bold text-xl">PM</div>
             <div>
               <p className="text-lg italic text-ink/80 leading-relaxed">
                 "Every child who walks through our doors carries unique gifts. Our mission is to help each one discover, develop, and share those gifts with the world."

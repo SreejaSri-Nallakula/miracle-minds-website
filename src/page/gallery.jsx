@@ -1,16 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { PageHero } from "../components/PageHero";
 
-export const Route = createFileRoute("/gallery")({
-  component: Gallery,
-});
+const tabs = ["All", "Events", "Classrooms", "Activities"];
 
-type Cat = "All" | "Events" | "Classrooms" | "Activities";
-const tabs: Cat[] = ["All", "Events", "Classrooms", "Activities"];
-
-const photos: { id: number; label: string; cat: Exclude<Cat, "All">; tall?: boolean }[] = [
+const photos = [
   { id: 1, label: "Annual Day", cat: "Events", tall: true },
   { id: 2, label: "Classroom Learning", cat: "Classrooms" },
   { id: 3, label: "Sports Day", cat: "Activities" },
@@ -25,9 +19,9 @@ const photos: { id: number; label: string; cat: Exclude<Cat, "All">; tall?: bool
   { id: 12, label: "Library Time", cat: "Classrooms" },
 ];
 
-function Gallery() {
-  const [active, setActive] = useState<Cat>("All");
-  const [lightbox, setLightbox] = useState<number | null>(null);
+export function GalleryPage() {
+  const [active, setActive] = useState("All");
+  const [lightbox, setLightbox] = useState(null);
   const filtered = active === "All" ? photos : photos.filter((p) => p.cat === active);
 
   return (
@@ -56,7 +50,7 @@ function Gallery() {
             <button
               key={p.id}
               onClick={() => setLightbox(p.id)}
-              className={`group relative overflow-hidden rounded-2xl shadow-card focus:outline-none focus:ring-2 focus:ring-brand-red ${p.tall ? "row-span-2 aspect-[3/5]" : "aspect-square"}`}
+              className={`group relative overflow-hidden rounded-2xl shadow-card focus:outline-none focus:ring-2 focus:ring-brand-red ${p.tall ? "row-span-2 aspect-3/5" : "aspect-square"}`}
             >
               <div className="w-full h-full bg-brand-gradient flex items-center justify-center text-white font-semibold group-hover:scale-110 transition-transform duration-500">
                 {p.label}

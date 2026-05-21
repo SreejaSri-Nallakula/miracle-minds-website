@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Facebook, Instagram, Youtube, Phone } from "lucide-react";
 import { LogoBadge } from "./LogoBadge";
 

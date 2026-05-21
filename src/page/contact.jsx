@@ -1,12 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { PageHero } from "../components/PageHero";
-
-export const Route = createFileRoute("/contact")({
-  component: Contact,
-});
 
 const schema = z.object({
   name: z.string().trim().min(1, "Please enter your name").max(100),
@@ -14,17 +9,19 @@ const schema = z.object({
   message: z.string().trim().min(1, "Please enter a message").max(1000),
 });
 
-function Contact() {
+export function ContactPage() {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const r = schema.safeParse(form);
     if (!r.success) {
-      const errs: Record<string, string> = {};
-      r.error.issues.forEach((i) => { errs[i.path[0] as string] = i.message; });
+      const errs = {};
+      r.error.issues.forEach((i) => {
+        errs[i.path[0]] = i.message;
+      });
       setErrors(errs);
       return;
     }
@@ -38,10 +35,9 @@ function Contact() {
       <PageHero title="Get in Touch" subtitle="We'd love to hear from you. Reach out with any questions about admissions or school life." />
 
       <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10">
-        {/* Left: contact info */}
         <div className="space-y-6">
           <div className="flex items-start gap-4">
-            <div className="w-11 h-11 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center flex-shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
               <MapPin className="w-5 h-5" />
             </div>
             <div>
@@ -50,7 +46,7 @@ function Contact() {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center flex-shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center shrink-0">
               <Phone className="w-5 h-5" />
             </div>
             <div>
@@ -59,7 +55,7 @@ function Contact() {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="w-11 h-11 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center flex-shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
               <Mail className="w-5 h-5" />
             </div>
             <div>
@@ -78,7 +74,6 @@ function Contact() {
           </div>
         </div>
 
-        {/* Right: form */}
         <form onSubmit={onSubmit} className="bg-white rounded-2xl shadow-card p-6 md:p-8 border border-border">
           <h3 className="text-2xl font-bold mb-1">Send us a message</h3>
           <p className="text-ink/60 text-sm mb-6">We'll get back to you within one working day.</p>
@@ -130,7 +125,7 @@ function Contact() {
   );
 }
 
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Field({ label, error, children }) {
   return (
     <div className="mb-4">
       <label className="block text-sm font-semibold text-ink mb-1.5">{label}</label>

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { LogoBadge } from "./LogoBadge";
@@ -23,14 +23,17 @@ export function Navbar() {
 
         <nav className="hidden lg:flex items-center gap-7">
           {links.map((l) => (
-            <Link
+            <NavLink
               key={l.to}
               to={l.to}
-              className="text-sm font-medium text-ink/80 hover:text-brand-red transition-colors"
-              activeProps={{ className: "text-brand-red" }}
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive ? "text-brand-red" : "text-ink/80 hover:text-brand-red"
+                }`
+              }
             >
               {l.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 
@@ -71,15 +74,16 @@ export function Navbar() {
             </button>
           </div>
           {links.map((l) => (
-            <Link
+            <NavLink
               key={l.to}
               to={l.to}
               onClick={() => setOpen(false)}
-              className="text-base font-medium text-ink hover:text-brand-red"
-              activeProps={{ className: "text-brand-red" }}
+              className={({ isActive }) =>
+                `text-base font-medium ${isActive ? "text-brand-red" : "text-ink hover:text-brand-red"}`
+              }
             >
               {l.label}
-            </Link>
+            </NavLink>
           ))}
           <Link
             to="/admissions"

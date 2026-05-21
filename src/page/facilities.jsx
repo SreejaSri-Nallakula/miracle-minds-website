@@ -1,11 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { School, Trophy, BookOpen, Palette } from "lucide-react";
 import { PageHero } from "../components/PageHero";
 import { SectionHeading } from "../components/SectionHeading";
-
-export const Route = createFileRoute("/facilities")({
-  component: Facilities,
-});
 
 const items = [
   { icon: School, color: "red", title: "Spacious Classrooms", desc: "Bright, airy classrooms equipped with modern learning aids and comfortable seating." },
@@ -14,7 +9,7 @@ const items = [
   { icon: Palette, color: "blue", title: "Art, Music & Activities", desc: "Dedicated spaces for creativity — painting, music, dance, and more." },
 ];
 
-function Facilities() {
+export function FacilitiesPage() {
   return (
     <>
       <PageHero title="World-Class Facilities" subtitle="Thoughtfully designed spaces that inspire learning, play, and creativity." />
