@@ -18,7 +18,7 @@ export function LogoBadge({ size = "md" }: { size?: "sm" | "md" | "lg" | "xl" | 
   return (
     <div className={`inline-flex items-center gap-3 select-none`}>
       <img
-        src="/Favicon.png?v=2"
+        src="/favicon.png?v=2"
         alt="Miracle Minds logo"
         className={`${faviconHeights[size]} object-contain`} 
         loading="eager"
