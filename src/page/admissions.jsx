@@ -51,7 +51,7 @@ export function AdmissionsPage() {
           <div className="mt-6 sm:mt-8 flex items-center gap-3">
             <div className="bg-[#c55a3f] rounded-full w-10 h-[3px] sm:w-12 sm:h-1" />
             <a
-              href="tel:9849140520"
+              href="tel:+91 9849140520"
               className="inline-flex items-center gap-2 rounded-full font-medium
                           bg-white/10 border border-white/20 text-white
                           hover:bg-white/20 transition-colors
@@ -59,7 +59,7 @@ export function AdmissionsPage() {
                           sm:px-5 sm:py-2 sm:text-[13px]"
             >
               <Phone className="w-3.5 h-3.5 text-[#c55a3f] sm:w-4 sm:h-4" />
-              9849140520
+              +91 9849140520
             </a>
           </div>
         </div>
@@ -274,14 +274,14 @@ export function AdmissionsPage() {
               We're happy to guide you through every step of the process.
             </p>
             <a
-              href="tel:9849140520"
+              href="tel:+91 9849140520"
               className="inline-flex items-center gap-2 rounded-full
                           bg-[#c55a3f] hover:bg-[#a8472e] text-white font-semibold
                           transition-colors
                           px-5 py-2.5 text-[13px] sm:px-6 sm:py-3 sm:text-[14px]"
             >
               <Phone className="w-4 h-4" />
-              Call Now: 9849140520
+              Call Now: +91 9849140520
             </a>
           </div>
         </div>

@@ -1,10 +1,10 @@
-import { Target, Star, BookOpen, Heart, Lightbulb, ShieldCheck } from "lucide-react";
+import { Target, Star, BookOpen, Heart, Lightbulb, ShieldCheck, Gamepad2, TrendingUp, Sparkles } from "lucide-react";
 
 const values = [
-  { icon: BookOpen,    title: "Excellence", desc: "Pursuing the highest standards in everything we do, academically and beyond." },
-  { icon: Heart,       title: "Compassion", desc: "Caring for one another with genuine kindness and empathy every day." },
-  { icon: Lightbulb,   title: "Curiosity",  desc: "Encouraging meaningful questions and the enduring joy of discovery." },
-  { icon: ShieldCheck, title: "Integrity",  desc: "Building lasting character through honesty, responsibility, and trust." },
+  { icon: BookOpen,   title: "Learn", desc: "Making education fun and engaging." },
+  { icon: Gamepad2,   title: "Play",  desc: "Balancing studies with joyful activities." },
+  { icon: TrendingUp, title: "Grow",  desc: "Developing skills, values, and confidence." },
+  { icon: Sparkles,   title: "Shine", desc: "Helping every child reach their potential." },
 ];
 
 export function AboutPage() {
@@ -38,8 +38,7 @@ export function AboutPage() {
                          text-[13px] leading-[1.75]
                          sm:text-[15px] sm:leading-relaxed sm:max-w-lg
                          md:text-base md:max-w-xl">
-            A nurturing space where children grow into confident, curious, and
-            compassionate learners — prepared for the world ahead.
+A caring place where children grow into confident, curious, and kind learners, ready for the future.
           </p>
           <div className="bg-[#c55a3f] rounded-full mt-6 sm:mt-8
                            w-10 h-[3px] sm:w-12 sm:h-1" />
@@ -59,17 +58,12 @@ export function AboutPage() {
           <p className="text-[#444458]
                          text-[13.5px] leading-[1.85]
                          sm:text-[15px]">
-            Miracle Minds is a leading primary school dedicated to providing quality education
-            that nurtures both the mind and the heart. Our experienced teachers, modern
-            facilities, and child-centered approach create an environment where every student
-            can flourish.
+Miracle Minds is a primary school focused on giving quality education in a caring and friendly environment. Our teachers support every child to learn, grow, and feel confident.
           </p>
           <p className="text-[#444458] mt-3 sm:mt-4
                          text-[13.5px] leading-[1.85]
                          sm:text-[15px]">
-            We blend academic rigor with creative learning, sports, and personal development
-            — ensuring that every child leaves Miracle Minds prepared for the world and
-            inspired to make a difference in it.
+We combine studies with fun activities, creativity, and sports so that children enjoy learning and develop all-round skills. Our goal is to help every child become confident, responsible, and ready for the future.
           </p>
         </div>
       </section>
@@ -100,9 +94,7 @@ export function AboutPage() {
               <p className="text-[#555568]
                              text-[13px] leading-[1.75]
                              sm:text-sm sm:leading-relaxed">
-                To be the school of choice for families who seek an inspiring, values-driven
-                education that prepares children to lead with confidence, curiosity, and
-                compassion.
+Our vision is to become a trusted school where children learn with confidence, curiosity, and kindness. We aim to help every child grow into a responsible and successful individual.
               </p>
             </div>
           </div>
@@ -122,9 +114,7 @@ export function AboutPage() {
               <p className="text-[#555568]
                              text-[13px] leading-[1.75]
                              sm:text-sm sm:leading-relaxed">
-                To deliver a holistic, student-first education that builds strong fundamentals,
-                nurtures creativity, and develops the character and resilience children need
-                to thrive.
+Our mission is to provide a well-rounded education that helps children build strong basics, be creative, and grow into confident and responsible individuals.
               </p>
             </div>
           </div>

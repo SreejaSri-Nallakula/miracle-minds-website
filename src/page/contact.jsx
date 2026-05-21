@@ -135,14 +135,14 @@ export function ContactPage() {
                     <p className="font-medium text-[#0f2557] mb-0.5
                                    text-[13px] sm:text-sm">Phone</p>
                     <p className="text-[#6b6b80] text-[12.5px] sm:text-[13px]">
-                      <a href="tel:9849140520"
+                      <a href="tel:+91 9849140520"
                          className="hover:text-[#c55a3f] transition-colors">
-                        9849140520
+                        +91 9849140520
                       </a>
                       {" / "}
-                      <a href="tel:9063614513"
+                      <a href="tel:+91 9063614513"
                          className="hover:text-[#c55a3f] transition-colors">
-                        9063614513
+                        +91 9063614513
                       </a>
                     </p>
                   </div>

@@ -16,17 +16,17 @@ A polished, responsive 6-page marketing site built as a React + Vite + Tailwind 
 ## Layout shell
 
 - `SiteLayout` with sticky `Navbar` and `Footer` wrapping all routes
-- **Navbar**: left logo badge, right links (Home, About, Admissions, Facilities, Gallery, Contact), far-right red CTA "Admissions Open 2025"; mobile hamburger slides in from right
+- **Navbar**: left logo badge, right links (Home, About, Admissions, Facilities, Gallery, Contact), far-right red CTA "Admissions Open 2026"; mobile hamburger slides in from right
 - **Footer**: dark blue `#1A3A6B`, 3 columns (badge+tagline / quick links / phone+socials) + centered © bar
 
 ## Pages
 
 1. **Home (`/`)** — Hero with red→blue diagonal gradient + headline & two CTAs → 4-card highlights strip (red top accent) → About preview 2-col → "Latest Updates" cards with blue left border → 4-image gallery preview with hover zoom
 2. **About (`/about`)** — Gradient hero → intro paragraphs → Vision (blue) + Mission (red) cards → Principal's quote card → 2×2 Core Values icon tiles
-3. **Admissions (`/admissions`)** — Gradient hero → 3 numbered red step circles → documents checklist with blue check icons → blue eligibility info box → red "Ready to Enroll?" CTA card with phone `9849140520`
+3. **Admissions (`/admissions`)** — Gradient hero → 3 numbered red step circles → documents checklist with blue check icons → blue eligibility info box → red "Ready to Enroll?" CTA card with phone `+91 9849140520`
 4. **Facilities (`/facilities`)** — Section heading → 2×2 facility cards, alternating red/blue icons, hover lift
 5. **Gallery (`/gallery`)** — Filter tabs (All / Events / Classrooms / Activities, active = red) → 3-column responsive masonry of 12 placeholder slots → click opens lightbox overlay
-6. **Contact (`/contact`)** — 2-column: left = address + phones (`9849140520`, `9063614513`) + email + Maps iframe placeholder; right = Name / Phone / Message form with red "Send Message" button (client-side zod validation, no backend wired)
+6. **Contact (`/contact`)** — 2-column: left = address + phones (`+91 9849140520`, `+91 9063614513`) + email + Maps iframe placeholder; right = Name / Phone / Message form with red "Send Message" button (client-side zod validation, no backend wired)
 
 ## Responsiveness & performance
 

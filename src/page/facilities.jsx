@@ -5,25 +5,25 @@ const items = [
     icon: School,
     color: "red",
     title: "Spacious Classrooms",
-    desc: "Bright, airy classrooms equipped with modern learning aids and comfortable seating for focused, engaging lessons.",
+    desc: "Bright and comfortable classrooms that help students learn with focus and ease.",
   },
   {
     icon: Trophy,
     color: "blue",
     title: "Playground & Sports",
-    desc: "Open play areas, sports gear, and trained coaches that foster an active, healthy, and team-spirited childhood.",
+    desc: "Open play areas and sports activities that keep children active and healthy.",
   },
   {
     icon: BookOpen,
     color: "red",
     title: "Library & Reading Room",
-    desc: "A well-stocked library designed to spark a lifelong love of reading and a passion for independent discovery.",
+    desc: "A friendly space with books that encourage reading and learning.",
   },
   {
     icon: Palette,
     color: "blue",
     title: "Art, Music & Activities",
-    desc: "Dedicated creative spaces for painting, music, dance, and more — nurturing every child's artistic voice.",
+    desc: "Creative spaces for art, music, and fun activities to develop every child’s talent.",
   },
 ];
 
@@ -58,8 +58,7 @@ export function FacilitiesPage() {
                          text-[13px] leading-[1.75]
                          sm:text-[15px] sm:leading-relaxed sm:max-w-lg
                          md:text-base md:max-w-xl">
-            Thoughtfully designed spaces that inspire learning, play, and
-            creativity — built for every child to thrive.
+Well-designed spaces that support learning, play, and creativity, helping every child grow and succeed.
           </p>
           <div className="bg-[#c55a3f] rounded-full mt-6 sm:mt-8
                            w-10 h-[3px] sm:w-12 sm:h-1" />
@@ -79,9 +78,7 @@ export function FacilitiesPage() {
           <p className="text-[#444458]
                          text-[13.5px] leading-[1.85]
                          sm:text-[15px]">
-            At Miracle Minds, our facilities are more than buildings — they are
-            environments carefully crafted to support curiosity, collaboration,
-            and growth at every stage of a child's journey.
+At Miracle Minds, our facilities are designed to support learning, creativity, and growth. We provide a safe and friendly environment where children can explore, learn, and develop at every stage.
           </p>
         </div>
       </section>

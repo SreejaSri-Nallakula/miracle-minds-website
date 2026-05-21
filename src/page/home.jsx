@@ -10,9 +10,9 @@ const highlights = [
 ];
 
 const updates = [
-  { date: "May 28, 2025", msg: "Annual Day celebrations scheduled for June 5, 2025." },
-  { date: "May 20, 2025", msg: "Summer holidays begin from June 10. School reopens on July 1." },
-  { date: "May 12, 2025", msg: "Admissions open for the 2025–26 academic year. Apply early!" },
+  { date: "May 28, 2026", msg: "Annual Day celebrations scheduled for June 5, 2026." },
+  { date: "May 20, 2026", msg: "Summer holidays begin from June 10. School reopens on July 1." },
+  { date: "May 12, 2026", msg: "Admissions open for the 2026–26 academic year. Apply early!" },
 ];
 
 export function HomePage() {
@@ -29,7 +29,7 @@ export function HomePage() {
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative grid md:grid-cols-2 gap-10 items-center">
           <div className="animate-fade-up">
-            <span className="inline-block bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-5">Admissions Open 2025</span>
+            <span className="inline-block bg-white/15 backdrop-blur px-3 py-1 rounded-full text-sm font-medium mb-5">Admissions Open 2026</span>
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">Welcome to Miracle Minds</h1>
             <p className="mt-4 text-lg md:text-xl text-white/90">The School of Excellence — Building Bright Futures</p>
             <div className="mt-8 flex flex-wrap gap-3">

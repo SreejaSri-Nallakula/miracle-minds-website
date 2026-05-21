@@ -3,6 +3,15 @@ import { X } from "lucide-react";
 
 const tabs = ["All", "Events", "Classrooms", "Activities"];
 
+const galleryImages = Object.entries(
+  import.meta.glob("../assets/gallery/*.{png,jpg,jpeg,webp,svg}", {
+    eager: true,
+    import: "default",
+  })
+)
+  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+  .map(([, image]) => image);
+
 const photos = [
   { id: 1,  label: "Annual Day",          cat: "Events",      tall: true  },
   { id: 2,  label: "Classroom Learning",  cat: "Classrooms"               },
@@ -16,7 +25,10 @@ const photos = [
   { id: 10, label: "Dance Recital",       cat: "Activities"               },
   { id: 11, label: "Field Trip",          cat: "Events"                   },
   { id: 12, label: "Library Time",        cat: "Classrooms"               },
-];
+].map((photo, index) => ({
+  ...photo,
+  src: galleryImages[index] ?? null,
+}));
 
 /* Placeholder colours per category — swap for real <img> tags later */
 const catColour = {
@@ -66,7 +78,7 @@ export function GalleryPage() {
             captured and cherished.
           </p>
           <div className="bg-[#c55a3f] rounded-full mt-6 sm:mt-8
-                           w-10 h-[3px] sm:w-12 sm:h-1" />
+                           w-10 h-0.75 sm:w-12 sm:h-1" />
         </div>
       </section>
 
@@ -101,7 +113,7 @@ export function GalleryPage() {
                            md:px-12 md:pt-8 md:pb-20
                            lg:px-6">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4
-                         [grid-auto-rows:160px] sm:[grid-auto-rows:180px] md:[grid-auto-rows:200px]">
+                         auto-rows-[160px] sm:auto-rows-[180px] md:auto-rows-[200px]">
           {filtered.map((p) => {
             const colours = catColour[p.cat];
             return (
@@ -112,14 +124,21 @@ export function GalleryPage() {
                              focus:outline-none focus:ring-2 focus:ring-[#c55a3f]
                              ${p.tall ? "row-span-2" : "row-span-1"}`}
               >
-                {/* Swap this div for <img src={p.src} … className="w-full h-full object-cover" /> */}
-                <div
-                  className="w-full h-full flex items-end transition-transform duration-500 group-hover:scale-105"
-                  style={{ background: colours.bg }}
-                />
+                {p.src ? (
+                  <img
+                    src={p.src}
+                    alt={p.label}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div
+                    className="w-full h-full flex items-end transition-transform duration-500 group-hover:scale-105"
+                    style={{ background: colours.bg }}
+                  />
+                )}
 
                 {/* Label overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent
                                  opacity-0 group-hover:opacity-100 transition-opacity duration-300
                                  flex items-end p-3 sm:p-4">
                   <div>
@@ -166,11 +185,18 @@ export function GalleryPage() {
             className="w-full max-w-3xl rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Swap div for <img src={lightboxPhoto.src} … className="w-full object-cover" /> */}
-            <div
-              className="w-full aspect-video flex items-center justify-center"
-              style={{ background: catColour[lightboxPhoto?.cat]?.bg }}
-            />
+            {lightboxPhoto?.src ? (
+              <img
+                src={lightboxPhoto.src}
+                alt={lightboxPhoto.label}
+                className="w-full aspect-video object-cover"
+              />
+            ) : (
+              <div
+                className="w-full aspect-video flex items-center justify-center"
+                style={{ background: catColour[lightboxPhoto?.cat]?.bg }}
+              />
+            )}
 
             <div className="bg-white px-5 py-4 sm:px-6 sm:py-5">
               <p className="font-serif font-semibold text-[#0f2557]

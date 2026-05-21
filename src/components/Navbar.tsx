@@ -42,7 +42,7 @@ export function Navbar() {
             to="/admissions"
             className="inline-flex items-center rounded-full bg-brand-red text-white text-sm font-semibold px-4 py-2 hover:bg-brand-red-dark transition-colors shadow-card"
           >
-            Admissions Open 2025
+            Admissions Open 2026
           </Link>
         </div>
 
@@ -90,7 +90,7 @@ export function Navbar() {
             onClick={() => setOpen(false)}
             className="mt-4 inline-flex justify-center items-center rounded-full bg-brand-red text-white text-sm font-semibold px-4 py-2.5"
           >
-            Admissions Open 2025
+            Admissions Open 2026
           </Link>
         </aside>
       </div>
